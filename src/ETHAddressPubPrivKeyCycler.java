@@ -15,7 +15,7 @@ public class ETHAddressPubPrivKeyCycler {
 	        //to
 	        //fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
 	        for(int i = 0; i<64; i++) {
-	        	//edge case that f is (pseudo)randomly chosen 31 times in a row to 
+	        	//edge case that 0xf is (pseudo)randomly chosen 31 times in a row 
 	        	if(i == 31 && fcounter == 31) {  
 	        		privkey = completer(privkey);
 	        		break;
@@ -35,6 +35,15 @@ public class ETHAddressPubPrivKeyCycler {
 	    //complete edge case private key
 	    private static String completer (String incompletePrivKey) {
 	        String maximum = "ebaaedce6af48a03bbfd25e8cd0364141";
-	        return "";        
+	        String getMaxHex;
+	        int digit;
+	        
+	        for(int i = 0; i<33; i++) {
+	        	getMaxHex = Character.toString(maximum.charAt(i));
+	        	digit = ThreadLocalRandom.current().nextInt(0, Integer.parseInt(getMaxHex,16)+1);
+	        	incompletePrivKey += Integer.toHexString(digit);
+	        }
+	        
+	        return incompletePrivKey;        
 	    }
 }
