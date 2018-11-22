@@ -2,17 +2,33 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ETHAddressPubPrivKeyCycler {
 	    public static void main ( String [] arguments )
 	    {
-	    	displayKeys();
+	    	display100();
+	    }
+	    
+	    private static void display100() {
+	    	for(int i = 0; i<100; i++) {displayKeys();}
 	    }
 	    
 	    private static void displayKeys() {
 	        String privkey = createRandomPrivateKey();
 	        
-	        //print private key/address pair, and next 100 pairs in sequence, 
+	        String pubkey = SECP256k1(privkey);
+	        
 	        //Ethereum public keys take the form of 32 hex characters (128 bits)
 	        //However, the addresses (which are colloquially known in the Ethereum community
 	        //as public keys despite it being a misnomer) are 40 hex characters.
-	        System.out.println(privkey);
+	        String address = keccak256(pubkey);
+	        
+	        //print private key/public key/address trio, 
+	        System.out.println(privkey + ", " + pubkey + ", " + address);
+	    }
+	    
+	    private static String keccak256(String publicKey) {
+	    	return publicKey;
+	    }
+	    
+	    private static String SECP256k1(String privateKey) {
+	    	return privateKey;
 	    }
 
 		private static String createRandomPrivateKey() {
