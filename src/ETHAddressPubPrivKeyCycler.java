@@ -2,13 +2,29 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ETHAddressPubPrivKeyCycler {
 	    public static void main ( String [] arguments )
 	    {
-	        String privkey = "";
+	    	displayKeys();
+	    }
+	    
+	    private static void displayKeys() {
+	        String privkey = createRandomPrivateKey();
+	        
+	        //print private key/address pair, and next 100 pairs in sequence, 
+	        //Ethereum public keys take the form of 32 hex characters (128 bits)
+	        //However, the addresses (which are colloquially known in the Ethereum community
+	        //as public keys despite it being a misnomer) are 40 hex characters.
+	        System.out.println(privkey);
+	    }
+
+		private static String createRandomPrivateKey() {
+			String privkey = "";
+	        String pubkey;
+	        String address;
 	        
 	        String digitHex;
 	        int digit;
 	        int fcounter = 0;
 	        
-	        //64 hex characters in an Ethereum private Key, with the constraint that it must 
+	        //64 hex characters (256 bits) in an Ethereum private Key, with the constraint that it must 
 	        //also be a valid value on the secp256k1 curve
 	        //Valid private keys may range from
 	        //0000000000000000000000000000000000000000000000000000000000000001
@@ -27,12 +43,10 @@ public class ETHAddressPubPrivKeyCycler {
 	        	
 	        	if(digitHex.equals("f")) fcounter++;
 	        }
-	        
-	        //print privkey, and next 100 private keys in sequence, 
-	        
-	    }
+			return privkey;
+		}
 	    
-	    //complete edge case private key
+	    //Finish Edge case private key
 	    private static String completer (String incompletePrivKey) {
 	        String maximum = "ebaaedce6af48a03bbfd25e8cd0364141";
 	        String getMaxHex;
