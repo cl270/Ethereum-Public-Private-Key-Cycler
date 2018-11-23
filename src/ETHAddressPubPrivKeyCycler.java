@@ -13,11 +13,13 @@ public class ETHAddressPubPrivKeyCycler {
 	    }
 	    
 	    private static void displayKeys() {
-	        String privkey = createRandomPrivateKey();
-	        
-	        
-	        //find the ECDSA public key using the SECP256k1 elliptic curve (i.e. y2 = x3 + 7)
-	        
+		//64 hex characters (256 bits) in an Ethereum private Key, with the constraint that it must 
+	        //also be a valid value on the secp256k1 curve
+	        //Valid private keys may range from
+	        //0000000000000000000000000000000000000000000000000000000000000001
+	        //to
+	        //fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
+	        String privkey = createRandomPrivateKey();	        
 	        
 	        //Ethereum public keys take the form of 32 hex characters (128 bits)
 	        //The addresses are keccak256 hashes of the public key 
@@ -37,7 +39,7 @@ public class ETHAddressPubPrivKeyCycler {
 	    	return keys.getAddress().toString();
 	    }
 
-		private static String createRandomPrivateKey() {
+	    private static String createRandomPrivateKey() {
 			String privkey = "";
 	        String pubkey;
 	        String address;
@@ -46,12 +48,6 @@ public class ETHAddressPubPrivKeyCycler {
 	        int digit;
 	        int fcounter = 0;
 	        
-	        //64 hex characters (256 bits) in an Ethereum private Key, with the constraint that it must 
-	        //also be a valid value on the secp256k1 curve
-	        //Valid private keys may range from
-	        //0000000000000000000000000000000000000000000000000000000000000001
-	        //to
-	        //fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
 	        for(int i = 0; i<64; i++) {
 	        	//edge case that 0xf is (pseudo)randomly chosen 31 times in a row 
 	        	if(i == 31 && fcounter == 31) {  
